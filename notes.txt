@@ -11,6 +11,7 @@ Product
   - name: CharField
   - description: CharField
   - type: CharField
+  - brancd: FK
 
 Product Line
   - id (PK): BigAutoField
@@ -37,3 +38,8 @@ Attribute Value
 Category
   - id (PK): BigAutoField
   - name: CharField
+
+Brand
+  - id (PK): BigAutoField
+  - name: CharField
+
