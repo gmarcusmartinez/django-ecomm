@@ -1,0 +1,39 @@
+# Packages
+django
+
+# Commands
+
+./manage.py runserver
+
+# Models
+Product
+  - id (PK): BigAutoField
+  - name: CharField
+  - description: CharField
+  - type: CharField
+
+Product Line
+  - id (PK): BigAutoField
+  - price: DecimalField
+  - SKU: CharField
+  - stock quantity: IntegerField
+  - product_id (FK): ForeignKey(Product)
+
+Product Image
+  - id (PK): BigAutoField
+  - name: CharField
+  - alt text: CharField
+  - location: CharField
+  - product_line_id (FK): ForeignKey(Product Line)
+
+Attribute
+  - id (PK): BigAutoField
+  - name: CharField
+
+Attribute Value
+  - id (PK): BigAutoField
+  - value: CharField
+
+Category
+  - id (PK): BigAutoField
+  - name: CharField
