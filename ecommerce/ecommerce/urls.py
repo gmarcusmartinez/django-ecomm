@@ -6,7 +6,9 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from ecommerce.product import views
 
 router = DefaultRouter()
+router.register("brand", views.BrandViewSet)
 router.register("category", views.CategoryViewSet)
+router.register("product", views.ProductViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
