@@ -25,6 +25,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductLineSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+
     class Meta:
         model = ProductLine
         fields = "__all__"
