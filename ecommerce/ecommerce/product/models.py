@@ -22,6 +22,7 @@ class Brand(models.Model):
 
 
 class Product(models.Model):
+    is_active = models.BooleanField(default=False)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     is_digital = models.BooleanField(default=False)
@@ -31,3 +32,14 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductLine(models.Model):
+    is_active = models.BooleanField(default=False)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    sku = models.CharField(max_length=255)
+    stock_qty = models.IntegerField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.product.name} - {self.quantity}"
