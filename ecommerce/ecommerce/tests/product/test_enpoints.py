@@ -35,3 +35,10 @@ class TestProductEndpoints:
 
         assert response.status_code == 200
         assert len(json.loads(response.content)) == 3
+
+    def test_get_product_by_slug(self, product_factory, client):
+        obj = product_factory(slug="test-slug")
+        response = client.get(f"{self.endpoint}{obj.slug}/")
+
+        assert response.status_code == 200
+        assert len(json.loads(response.content)) == 1

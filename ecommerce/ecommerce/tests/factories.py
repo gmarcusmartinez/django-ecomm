@@ -33,9 +33,9 @@ class ProductLineFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = ProductLine
 
-    product = factory.SubFactory(ProductFactory)
+    is_active = True
     price = 100
+    product = factory.SubFactory(ProductFactory)
+    sequence = 1
     sku = factory.sequence(lambda n: f"sku-{n}")
     stock_qty = 10
-    is_active = True
-    sequence = 1
