@@ -1,6 +1,13 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 
+from ecommerce.product.fields import OrderField
+
+
+class ActiveQuerySet(models.QuerySet):
+    def isactive(self):
+        return self.filter(is_active=True)
+
 
 class Category(MPTTModel):
     name = models.CharField(max_length=255, unique=True)
@@ -31,6 +38,8 @@ class Product(models.Model):
     category = TreeForeignKey('Category', null=True,
                               blank=True, on_delete=models.SET_NULL)
 
+    objects = ActiveQuerySet.as_manager()
+
     def __str__(self):
         return self.name
 
@@ -42,6 +51,7 @@ class ProductLine(models.Model):
     stock_qty = models.IntegerField()
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="product_line")
+    sequence = OrderField(unique_for_field="product", blank=True)
 
     def __str__(self):
         return f"{self.product.name} - {self.stock_qty}"

@@ -31,11 +31,12 @@ class CategoryViewSet(viewsets.ViewSet):
 
 
 class ProductViewSet(viewsets.ViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().isactive()
     lookup_field = 'slug'
 
     def retrieve(self, request, slug=None):
-        serializer = ProductSerializer(self.queryset.get(slug=slug))
+        serializer = ProductSerializer(self.queryset.filter(
+            slug=slug).select_related("category", "brand"), many=True)
         return Response(serializer.data)
 
     @extend_schema(responses=ProductSerializer)
