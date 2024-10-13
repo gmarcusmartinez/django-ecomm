@@ -1,6 +1,6 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
-
+from django.core.exceptions import ValidationError
 from ecommerce.product.fields import OrderField
 
 
@@ -52,6 +52,13 @@ class ProductLine(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="product_line")
     sequence = OrderField(unique_for_field="product", blank=True)
+
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+        qs = ProductLine.objects.filter(product=self.product)
+        for obj in qs:
+            if self.id != obj.id and self.sequence == obj.sequence:
+                raise ValidationError("Sequence must be unique per product")
 
     def __str__(self):
         return f"{self.product.name} - {self.stock_qty}"
