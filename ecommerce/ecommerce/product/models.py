@@ -53,12 +53,11 @@ class ProductLine(models.Model):
         Product, on_delete=models.CASCADE, related_name="product_line")
     sequence = OrderField(unique_for_field="product", blank=True)
 
-    def clean_fields(self, exclude=None):
-        super().clean_fields(exclude=exclude)
+    def clean(self):
         qs = ProductLine.objects.filter(product=self.product)
         for obj in qs:
             if self.id != obj.id and self.sequence == obj.sequence:
                 raise ValidationError("Sequence must be unique per product")
 
     def __str__(self):
-        return f"{self.product.name} - {self.stock_qty}"
+        return f"{self.sku}"
